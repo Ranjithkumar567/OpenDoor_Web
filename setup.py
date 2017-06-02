@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -19,7 +19,7 @@
 
 from setuptools import setup, find_packages
     
-VERSION = '3.0.3rc0'
+VERSION = '3.1.32rc0'
 LONG_DESCRIPTION = open('README.md').read()
 
 setup(name='opendoor',
