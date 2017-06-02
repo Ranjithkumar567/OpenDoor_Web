@@ -37,7 +37,7 @@ chmod +x opendoor.py
  // provide of using opendoor interface from global python scope
 
  $ cd opendoorDirectory/
- $ python3 setup.py build && python setup.py install
+ $ python3 setup.py build && python3 setup.py install
  
 ```
 
