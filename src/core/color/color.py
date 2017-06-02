@@ -68,6 +68,10 @@ class Color(object):
         """
 
         if Color.__has_colors(sys.stdout):
+
+            if isinstance(text, bytes):
+                text = str(text, "utf-8")
+
             text = text.strip('\n')
             seq = "\x1b[%dm" % (30 + Color.__get(color)) + text + "\x1b[0m"
             return seq

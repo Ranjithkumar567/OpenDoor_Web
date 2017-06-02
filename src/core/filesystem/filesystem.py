@@ -301,7 +301,7 @@ class FileSystem(object):
         :return: configparser.RawConfigParser
         """
 
-        buf = StringIO(data.decode("utf-8"))
+        buf = StringIO(str(data, "utf-8"))
         try:
             config = ConfigParser()
             config.read_file(buf)
