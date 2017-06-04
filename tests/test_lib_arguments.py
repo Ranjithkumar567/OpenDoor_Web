@@ -36,10 +36,9 @@ class TestArguments(unittest.TestCase):
     def test_get_arguments_exception(self):
         """ Arguments.get_arguments() exception test """
 
-        with self.assertRaises(ArgumentsError) as context:
+        with self.assertRaises(SystemExit) as context:
             Arguments.get_arguments()
-        self.assertTrue('OptionsError' in str(context.exception))
-        self.assertTrue(ArgumentsError == context.expected)
-        
+        self.assertTrue(SystemExit is context.expected)
+
 if __name__ == "__main__":
     unittest.main()

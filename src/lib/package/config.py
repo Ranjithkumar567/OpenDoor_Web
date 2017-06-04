@@ -24,6 +24,7 @@ class Config(object):
         'cvsupdate': '/usr/bin/git pull origin master',
         'cvslog': '/usr/bin/git log --oneline -n 1',
         'cfg': 'setup.cfg',
+        'documentations': 'https://github.com/stanislav-web/OpenDoor/wiki',
         'required_versions': {
             'minor': '3.1',
             'major': '3.6'
@@ -45,6 +46,7 @@ class Config(object):
                 python ./opendoor.py --host "http://example.com"  --random-list --threads 10 --delay 10 --timeout 10
                 python ./opendoor.py --host "http://example.com" --threads 10 --delay 10 --timeout 10 --debug 1
                 python ./opendoor.py --host "http://example.com" --threads 10 --debug 1 --reports std,txt
+                python ./opendoor.py --host "http://example.com" --debug 1 --reports std,txt --reports-dir /reports
                 python ./opendoor.py --host "http://example.com" --threads 10 --debug 1 --extensions php,html
             """, 'banner': """
 ############################################################

@@ -7,44 +7,25 @@ OWASP WEB Directory Scanner [![Twitter](https://img.shields.io/twitter/url/https
 
 |  Python | Linux  |  OSX | Windows  |
 |:-:|:-:|:-:|:-:|
-|2.6|[![Build Status](https://travis-ci.org/stanislav-web/OpenDoor.svg?branch=master)](https://travis-ci.org/stanislav-web/OpenDoor)    | ?  | [![Build status](https://ci.appveyor.com/api/projects/status/3hmrb64ofdssi4qd?svg=true)](https://ci.appveyor.com/project/stanislav-web/opendoor)|
-|2.7|[![Build Status](https://travis-ci.org/stanislav-web/OpenDoor.svg?branch=master)](https://travis-ci.org/stanislav-web/OpenDoor)    | ?  | [![Build status](https://ci.appveyor.com/api/projects/status/3hmrb64ofdssi4qd?svg=true)](https://ci.appveyor.com/project/stanislav-web/opendoor)|
+|3.1|[![Build Status](https://travis-ci.org/stanislav-web/OpenDoor.svg?branch=master)](https://travis-ci.org/stanislav-web/OpenDoor)    | ?  | [![Build status](https://ci.appveyor.com/api/projects/status/3hmrb64ofdssi4qd?svg=true)](https://ci.appveyor.com/project/stanislav-web/opendoor)|
+|3.2|[![Build Status](https://travis-ci.org/stanislav-web/OpenDoor.svg?branch=master)](https://travis-ci.org/stanislav-web/OpenDoor)    | ?  | [![Build status](https://ci.appveyor.com/api/projects/status/3hmrb64ofdssi4qd?svg=true)](https://ci.appveyor.com/project/stanislav-web/opendoor)|
+|3.3|[![Build Status](https://travis-ci.org/stanislav-web/OpenDoor.svg?branch=master)](https://travis-ci.org/stanislav-web/OpenDoor)    | ?  | [![Build status](https://ci.appveyor.com/api/projects/status/3hmrb64ofdssi4qd?svg=true)](https://ci.appveyor.com/project/stanislav-web/opendoor)|
+|3.4|[![Build Status](https://travis-ci.org/stanislav-web/OpenDoor.svg?branch=master)](https://travis-ci.org/stanislav-web/OpenDoor)    | ?  | [![Build status](https://ci.appveyor.com/api/projects/status/3hmrb64ofdssi4qd?svg=true)](https://ci.appveyor.com/project/stanislav-web/opendoor)|
+|3.5|[![Build Status](https://travis-ci.org/stanislav-web/OpenDoor.svg?branch=master)](https://travis-ci.org/stanislav-web/OpenDoor)    | ?  | [![Build status](https://ci.appveyor.com/api/projects/status/3hmrb64ofdssi4qd?svg=true)](https://ci.appveyor.com/project/stanislav-web/opendoor)|
+|3.6|[![Build Status](https://travis-ci.org/stanislav-web/OpenDoor.svg?branch=master)](https://travis-ci.org/stanislav-web/OpenDoor)    | ?  | [![Build status](https://ci.appveyor.com/api/projects/status/3hmrb64ofdssi4qd?svg=true)](https://ci.appveyor.com/project/stanislav-web/opendoor)|
 
-This application scans the site directories and find all possible ways to login, index of/ dirs and entry points.
-The scanning is performed by the dictionary that came with the software. Possiblly to use own dictionaries.
-This software is written for informational purposes and is an open source product under the GPL license.
+**OpenDoor OWASP** is console multifunctional web sites scanner.
+This application find all possible ways to login, index of/ directories, restricted access points, subdomains, hidden data and large backups.
+The scanning is performed by the built-in dictionary and external dictionaries as well. Anonymity and speed are provided by means of using proxy servers.
+Software is written for informational purposes and is open source product under the GPL license.
     
 * *Current v3.1.32-rc (02.06.2017)*
     - Directories - 35888
     - Subdomains - 101000
 
-***Testing of the software on the commercial systems and organizations is prohibited!***
+***Testing of the software on the live commercial systems and organizations is prohibited!***
 
 ![Alt text](http://dl3.joxi.net/drive/2017/01/30/0001/0378/90490/90/e309742b5c.jpg "OpenDoor OWASP")
-
-
-#### Maintainers
-- @stanislav-web <https://github.com/stanislav-web> (Developer)
-
-#### Install Dependencies
-```
-pip install -r requirements.txt
-chmod +x opendoor.py
-```
-
-#### Global installation
-```
- // provide of using opendoor interface from global python scope
-
- $ cd opendoorDirectory/
- $ python3 setup.py build && python3 setup.py install
- 
-```
-
-Also, you have to install `socksipy` package if you'll use socks as proxy
-```
-apt-get install python-socksipy
-```
 
 #### Implements
 - [x] multithreading control
@@ -59,6 +40,7 @@ apt-get install python-socksipy
 - [x] custom wordlists, proxies, ignore lists
 - [x] debug levels (1-3)
 - [x] extensions filter
+- [x] custom reports directory
 - [x] analyze techniques
     * detect redirects
     * detect index of/ Apache
@@ -70,21 +52,43 @@ apt-get install python-socksipy
     * wordlists shuffling
 
 
-#### [Changelog](CHANGELOG.md) (last changes)
-
-v3.1.32-rc (02.06.2017)
--------------------------
-    - Add extensions filter --extensions php,json etc
-
-#### Basic usage
+#### Local installation and run
 ```
+ git clone https://github.com/stanislav-web/OpenDoor.git
+ cd OpenDoor/
+ pip install -r requirements.txt
+ chmod +x opendoor.py
+
  python3 opendoor.py --host http://www.example.com
 ```
 
-#### Global usage
+#### Global installation (Preferably for OS distributions)
 ```
+ git clone https://github.com/stanislav-web/OpenDoor.git
+ cd OpenDoor/
+ python3 setup.py build && python3 setup.py install
+
  opendoor --host http://www.example.com
 ```
+
+
+#### Updates
+```
+ python3 opendoor.py --update
+ opendoor --update
+```
+
+#### [Changelog](CHANGELOG.md) (last changes)
+
+v3.2.36-rc (04.06.2017)
+-----------------------
+    - Added custom reports directory --reports-dir /home/user/Reports
+    - Added user guide --docs
+    - Reusable proxy requests pooling in --tor, --torlist
+    - Prevent socks5 proxies warnings
+    - Optimizing scan execution
+    - Request's delays allow to use of milliseconds
+    - Python2.7 no longer support
 
 #### Help
 ```
@@ -92,9 +96,10 @@ usage: opendoor.py [-h] [--host HOST] [-p PORT] [-m METHOD] [-t THREADS]
                    [-d DELAY] [--timeout TIMEOUT] [-r RETRIES]
                    [--accept-cookies] [--debug DEBUG] [--tor]
                    [--torlist TORLIST] [--proxy PROXY] [-s SCAN] [-w WORDLIST]
-                   [--reports REPORTS] [--random-agent] [--random-list]
-                   [--prefix PREFIX] [-e EXTENSIONS] [-i] [--update]
-                   [--version] [--examples]
+                   [--reports REPORTS] [--reports-dir REPORTS_DIR]
+                   [--random-agent] [--random-list] [--prefix PREFIX]
+                   [-e EXTENSIONS] [-i] [--update] [--version] [--examples]
+                   [--docs]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -106,22 +111,28 @@ Application tools:
   --update              Update from CVS
   --version             Get current version
   --examples            Examples of usage
+  --docs                Read documentation
 
 Debug tools:
   --debug DEBUG         Debug level 1 - 3
 
+Reports tools:
+  --reports REPORTS     Scan reports (json,std,txt)
+  --reports-dir REPORTS_DIR
+                        Path to custom reports dir
+
 Request tools:
   -p PORT, --port PORT  Custom port (Default 80)
   -m METHOD, --method METHOD
-                        HTTP method (use HEAD as default)
+                        Request method (use HEAD as default)
   -d DELAY, --delay DELAY
-                        Delay between request's threads
+                        Delay between requests threading
   --timeout TIMEOUT     Request timeout (30 sec default)
   -r RETRIES, --retries RETRIES
                         Max retries to reconnect (default 3)
   --accept-cookies      Accept and route cookies from responses
-  --tor                 Using proxylist
-  --torlist TORLIST     Path to external proxylist
+  --tor                 Using built-in proxylist
+  --torlist TORLIST     Path to custom proxylist
   --proxy PROXY         Custom permanent proxy server
   --random-agent        Randomize user-agent per request
 
@@ -135,16 +146,17 @@ Stream tools:
 Wordlist tools:
   -s SCAN, --scan SCAN  Scan type scan=directories or scan=subdomains
   -w WORDLIST, --wordlist WORDLIST
-                        Path to external wordlist
-  --reports REPORTS     Scan reports (json,std,txt)
+                        Path to custom wordlist
   --random-list         Shuffle scan list
   --prefix PREFIX       Append path prefix to scan host
   -e EXTENSIONS, --extensions EXTENSIONS
                         Extensions filter -e php,json e.g
-
 ```
 
-### Test
+#### Maintainers
+- @stanislav-web <https://github.com/stanislav-web> (Developer)
+
+### Tests
 ```
 pip install  -r requirements-dev.txt
 coverage run --source=src/ setup.py test

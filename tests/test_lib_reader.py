@@ -18,7 +18,7 @@
 
 import unittest2 as unittest
 import os
-from configparser import ConfigParser
+from configparser import RawConfigParser
 from src.core.helper.helper import Helper
 from src.lib.reader import Reader, ReaderError
 from src.core.filesystem.filesystem import FileSystem
@@ -50,14 +50,14 @@ class TestReader(unittest.TestCase):
     @property
     def __configuration(self):
         test_config =  FileSystem.getabsname(os.path.join('tests', 'data', 'setup.cfg'))
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         config.read(test_config)
         return config
 
     @property
     def __configuration_for_exception(self):
         test_config =  FileSystem.getabsname(os.path.join('tests', 'data', 'setupwrong.cfg'))
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         config.read(test_config)
         return config
 

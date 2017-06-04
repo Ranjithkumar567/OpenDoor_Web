@@ -26,18 +26,20 @@ class TextReportPlugin(PluginProvider):
     PLUGIN_NAME = 'TextReport'
     EXTENSION_SET = '.txt'
 
-    def __init__(self, taget, data):
+    def __init__(self, taget, data, directory=None):
         """
         PluginProvider constructor
         :param str taget: target host
         :param dict data: result set
+        :param str directory: custom directory
         """
         
         PluginProvider.__init__(self, taget, data)
 
         try:
-            config = filesystem.readcfg(self.CONFIG_FILE)
-            directory = config.get('opendoor', 'reports')
+            if None is directory:
+                config = filesystem.readcfg(self.CONFIG_FILE)
+                directory = config.get('opendoor', 'reports')
             self.__target_dir = "".join((directory, self._target))
             filesystem.makedir(self.__target_dir)
         except FileSystemError as error:

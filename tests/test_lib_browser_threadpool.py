@@ -70,7 +70,7 @@ class TestBrowserThreadPool(unittest.TestCase):
         """ ThreadPool.pause() test """
         
         with self.assertRaises(KeyboardInterrupt) as context:
-            with patch('__builtin__.raw_input', return_value='e') as _raw_input:
+            with patch('builtins.input', return_value='e') as _raw_input:
                 self.assertEqual(self.pause(), 'e')
                 _raw_input.assert_called_once_with('e')
             self.assertTrue(KeyboardInterrupt == context.expected)

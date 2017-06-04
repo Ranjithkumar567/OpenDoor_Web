@@ -19,7 +19,7 @@
 
 from setuptools import setup, find_packages
     
-VERSION = '3.1.32rc0'
+VERSION = '3.2.36rc0'
 LONG_DESCRIPTION = open('README.md').read()
 
 setup(name='opendoor',
@@ -46,6 +46,7 @@ setup(name='opendoor',
       packages=find_packages(),
       package_data={'': ['setup.cfg']},
       data_files=[('.', ['setup.cfg']),
+                  ('.', ['documentations.html']),
                   ('data', [
                       'data/directories.dat',
                       'data/ignored.dat',

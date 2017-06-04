@@ -29,9 +29,9 @@ class TestOptions(unittest.TestCase):
     """TestOptions class"""
 
     @data(
-            {'version': True, 'examples': False, 'update': None},
-            {'examples': True, 'version': None, 'update': False},
-            {'update': True , 'version': False, 'examples': False}
+            {'version': True, 'examples': False, 'update': None, 'docs' : None},
+            {'examples': True, 'version': None, 'update': False, 'docs' : None},
+            {'update': True , 'version': False, 'examples': False, 'docs' : None}
     )
     def test_get_arg_values_standalone(self, data):
         """ Arguments.get_arg_values() standalone call test """
@@ -42,7 +42,8 @@ class TestOptions(unittest.TestCase):
         args.version = data.get('version')
         args.update = data.get('update')
         args.examples = data.get('examples')
-        setattr(opt, '_Options__standalone', ["version", "update", "examples"])
+        args.docs = data.get('docs')
+        setattr(opt, '_Options__standalone', ["version", "update", "examples","docs"])
         setattr(opt, 'args', args)
         actual = opt.get_arg_values()
         self.assertTrue(isinstance(actual, dict))
@@ -57,7 +58,7 @@ class TestOptions(unittest.TestCase):
     )
     def test_get_arg_values(self, data):
         """ Arguments.get_arg_values() test """
-        
+
         opt = Options.__new__(Options)
         args = argparse.Namespace()
         args.host = data.get('host')
@@ -66,23 +67,24 @@ class TestOptions(unittest.TestCase):
         args.version = False
         args.update = False
         args.examples = False
-        setattr(opt, '_Options__standalone', ["version", "update", "examples"])
+        args.docs = False
+        setattr(opt, '_Options__standalone', ["version", "update", "examples", "docs"])
         setattr(opt, 'args', args)
         actual = opt.get_arg_values()
         self.assertTrue(isinstance(actual, dict))
-        
+
     def test_get_arg_values_exception(self):
         """ Arguments.get_arg_values() exception test """
 
-        with self.assertRaises(OptionsError) as context:
+        with self.assertRaises(SystemExit) as context:
             Options().get_arg_values()
-        self.assertTrue(OptionsError == context.expected)
+        self.assertTrue(SystemExit is context.expected)
 
     def test_get_arg_values_exception2(self):
         """ Arguments.get_arg_values() exception2 test """
-        
+
         opt = Options.__new__(Options)
-        setattr(opt, '_Options__standalone', ["version", "update", "examples"])
+        setattr(opt, '_Options__standalone', ["version", "update", "examples", "docs"])
         setattr(opt, 'args', {})
         with self.assertRaises(OptionsError) as context:
             opt.get_arg_values()
@@ -90,20 +92,19 @@ class TestOptions(unittest.TestCase):
 
     def test_get_arg_values_exception3(self):
         """ Arguments.get_arg_values() exception3 test """
-        
+
         opt = Options.__new__(Options)
         args = argparse.Namespace()
         args.host = ''
         args.version = False
         args.update = False
         args.examples = False
-        setattr(opt, '_Options__standalone', ["version", "update", "examples"])
+        args.docs = False
+        setattr(opt, '_Options__standalone', ["version", "update", "examples", "docs"])
         setattr(opt, 'args', args)
         with self.assertRaises(OptionsError) as context:
             opt.get_arg_values()
         self.assertTrue(OptionsError == context.expected)
-        self.assertTrue('argument --host is required' in context.exception)
-
 
 if __name__ == "__main__":
     unittest.main()

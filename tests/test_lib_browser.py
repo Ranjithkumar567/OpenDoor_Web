@@ -25,7 +25,7 @@ from src.lib.reader.reader import Reader
 from src.lib.tpl.tpl import Tpl
 from src.core.http.response import Response
 import os
-from configparser import ConfigParser
+from configparser import RawConfigParser
 from ddt import ddt, data
 from src.core import filesystem, helper
 
@@ -39,7 +39,7 @@ class TestBrowser(unittest.TestCase):
     @property
     def __configuration(self):
         test_config = filesystem.getabsname(os.path.join('tests', 'data', 'setup-scan.cfg'))
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         config.read(test_config)
         return config
 

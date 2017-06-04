@@ -6970,12 +6970,12 @@ bits/
 biuletyn/
 biy/upload/
 biz/
-biz_admin
+biz_admin.php
 biz_admin/
-biz_admin_bak
+biz_admin_bak.php
 biz_admin_bak/
 biz_manage/
-bizadmin
+bizadmin.php
 bizadmin/
 bizcard/
 bizfilings/

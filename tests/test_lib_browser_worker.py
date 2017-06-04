@@ -44,12 +44,5 @@ class TestBrowserWorker(unittest.TestCase):
         self.assertEqual(self._worker.pause(), None)
         self.assertFalse(getattr(self._worker, '_Worker__running', True))
 
-    def test_exception_property(self):
-        """ Worker.exception test """
-    
-        self.assertIs(type(Worker.exception), property)
-        self.assertTrue(self._worker.exception is None)
-
-
 if __name__ == "__main__":
     unittest.main()

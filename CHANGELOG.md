@@ -1,5 +1,15 @@
 Changes
 =======
+v3.2.36-rc (04.06.2017)
+-------------------------
+    - Added custom reports directory --reports-dir /home/user/Reports
+    - Added user guide --docs
+    - Reusable proxy requests pooling in --tor, --torlist
+    - Prevent socks5 proxies warnings
+    - Optimizing scan execution
+    - Request's delays allow to use of milliseconds
+    - Python2.7 no longer support
+
 v3.1.32-rc (02.06.2017)
 -------------------------
     - Add extensions filter --extensions php,json etc
@@ -39,8 +49,6 @@ v3.0.2-beta (31.01.2017)
     - added multithreading control
     - dynamic and smart requests (cookies + accept headers)
     - apache index of/ and files detection
-    - apache index of/ and files detection
-
 
 v2.7.96 Before redesign (05.01.2017)
 ------------------------------------

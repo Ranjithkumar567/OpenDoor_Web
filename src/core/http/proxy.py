@@ -19,8 +19,9 @@
 import importlib
 import random
 
-from urllib3 import ProxyManager
-from urllib3.exceptions import DependencyWarning, MaxRetryError, ProxySchemeUnknown, ReadTimeoutError
+from urllib3 import ProxyManager, disable_warnings
+from urllib3.exceptions import DependencyWarning, MaxRetryError, ProxySchemeUnknown,\
+    ReadTimeoutError, InsecureRequestWarning
 
 from src.core import helper
 from .exceptions import ProxyRequestError
@@ -68,6 +69,8 @@ class Proxy(RequestProvider, DebugProvider):
 
             if self.__get_proxy_type(self.__server) == 'socks':
 
+                disable_warnings(InsecureRequestWarning)
+
                 if not hasattr(self, '__pm'):
 
                     package_module = importlib.import_module('urllib3.contrib.socks')
@@ -87,26 +90,37 @@ class Proxy(RequestProvider, DebugProvider):
         :return: urllib3.HTTPResponse
         """
 
-        pool = self.__proxy_pool()
-
         if self._HTTP_DBG_LEVEL <= self.__debug.level:
             self.__debug.debug_request(self._headers, url, self.__cfg.method)
 
         try:
-            response = pool.request(self.__cfg.method, url, headers=self._headers, retries=self.__cfg.retries,
-                                    redirect=False)
-
-            self.cookies_middleware(is_accept=self.__cfg.accept_cookies, response=response)
-
+            response = self.__pool_request(url)
             return response
 
         except MaxRetryError:
             if self.__cfg.DEFAULT_SCAN == self.__cfg.scan:
                 self.__tpl.warning(key='proxy_max_retry_error', url=helper.parse_url(url).path, proxy=self.__server)
+                # Retrying request
+                return self.__pool_request(url)
 
         except ReadTimeoutError:
             if self.__cfg.DEFAULT_SCAN == self.__cfg.scan:
                 self.__tpl.warning(key='read_timeout_error', url=helper.parse_url(url).path)
+
+    def __pool_request(self, url):
+        """
+        Shadow pool request
+        :param string url: target url
+        :return: urllib3.HTTPResponse
+        """
+
+        pool = self.__proxy_pool()
+        response = pool.request(self.__cfg.method, url, headers=self._headers, retries=self.__cfg.retries,
+                                redirect=False)
+
+        self.cookies_middleware(is_accept=self.__cfg.accept_cookies, response=response)
+
+        return response
 
     def __get_random_proxy(self):
         """

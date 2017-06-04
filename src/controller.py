@@ -45,12 +45,12 @@ class Controller(object):
         try:
 
             interpreter = package.check_interpreter()
-            
+
             if interpreter is not True:
                 raise SrcError(tpl.error(key='unsupported', actual=interpreter.get('actual'),
                                          expected=interpreter.get('expected')))
-
-            self.ioargs = args().get_arguments()
+            else:
+                self.ioargs = args().get_arguments()
         except ArgumentsError as error:
             raise SrcError(tpl.error(error))
 
@@ -100,6 +100,21 @@ class Controller(object):
             tpl.message(package.update())
         except (AttributeError, PackageError) as error:
             raise SrcError(error)
+
+    @staticmethod
+    def docs_action():
+        """
+         Show app user guide
+
+         :raise SrcError
+         :return: None
+         """
+
+        try:
+            package.docs()
+        except (AttributeError, PackageError) as error:
+            raise SrcError(error)
+
 
     @staticmethod
     def version_action():

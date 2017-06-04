@@ -17,6 +17,7 @@
 """
 
 import importlib
+import os
 from src.core import filesystem, FileSystemError
 from .exceptions import ReporterError
 
@@ -26,6 +27,7 @@ class Reporter(object):
 
     default = 'std'
     config = 'setup.cfg'
+    external_directory = None
 
     @staticmethod
     def is_reported(resource):
@@ -36,8 +38,14 @@ class Reporter(object):
         """
 
         try:
-            config = filesystem.readcfg(Reporter.config)
-            return filesystem.is_exist(config.get('opendoor', 'reports'), resource)
+            if None is not Reporter.external_directory:
+                if not Reporter.external_directory.endswith(os.path.sep):
+                    Reporter.external_directory += os.path.sep
+                is_reported = filesystem.is_exist(Reporter.external_directory, resource)
+            else:
+                config = filesystem.readcfg(Reporter.config)
+                is_reported = filesystem.is_exist(config.get('opendoor', 'reports'), resource)
+            return is_reported
         except FileSystemError as error:
             raise ReporterError(error)
 
@@ -57,7 +65,7 @@ class Reporter(object):
 
             try:
                 report = getattr(package_module, plugin_name)
-                return report(target, data)
+                return report(target, data, Reporter.external_directory)
             except (TypeError, AttributeError, Exception):
                 raise ReporterError('Unable to get reporter `{plugin}`'.format(plugin=plugin_name))
         except ImportError:

@@ -25,7 +25,7 @@ from src.core import sys
 class StdReportPlugin(PluginProvider):
     """ StdReportPlugin class"""
 
-    def __init__(self, taget, data):
+    def __init__(self, taget, data, directory=None):
         """
         PluginProvider constructor
         :param str taget: target host
@@ -33,6 +33,7 @@ class StdReportPlugin(PluginProvider):
         """
 
         PluginProvider.__init__(self, taget, data)
+        self.directory = directory
 
     def process(self):
         """

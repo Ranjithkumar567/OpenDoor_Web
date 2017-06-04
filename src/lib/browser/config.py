@@ -46,6 +46,7 @@ class Config(object):
         self._accept_cookies = False if params.get('accept_cookies') is None else True
         self._port = params.get('port')
         self._wordlist = params.get('wordlist')
+        self._reports_dir = params.get('reports_dir')
         self._prefix = "" if params.get('prefix') is None else params.get('prefix')
         self._reports = params.get('reports')
         self._extensions = params.get('extensions')
@@ -143,6 +144,11 @@ class Config(object):
         Delay property
         :return: int
         """
+
+        if None is self._delay:
+            self._delay = 0
+        elif 1 <= self._delay:
+            self._delay = int(self._delay)
 
         return self._delay
 
@@ -281,6 +287,26 @@ class Config(object):
         return True
 
     @property
+    def is_external_reports_dir(self):
+        """
+        If exteranl reports directory selected
+        :return: bool
+        """
+
+        if None is self._reports_dir:
+            return False
+        return True
+
+    @property
+    def reports_dir(self):
+        """
+        Get reports dir
+        :return: str
+        """
+
+        return self._reports_dir
+
+    @property
     def extensions(self):
         """
         Extensions resolver
@@ -302,18 +328,6 @@ class Config(object):
         if self.DEFAULT_REPORT not in reports:
             reports.append(self.DEFAULT_REPORT)
         return reports
-
-    @property
-    def extensions(self):
-        """
-        Extensions filter resolves
-        :return: list
-        """
-
-        extensions = self._extensions
-        if None is not self._extensions:
-            extensions = extensions.split(",")
-        return extensions
 
     @property
     def user_agent(self):

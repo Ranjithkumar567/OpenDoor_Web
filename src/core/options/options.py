@@ -32,7 +32,7 @@ class Options(object):
         :raise OptionsError
         """
 
-        self.__standalone = ["version", "update", "examples"]
+        self.__standalone = ['version', 'update', 'examples', 'docs']
 
         __groups = {
             'request': "Request tools",
@@ -40,6 +40,7 @@ class Options(object):
             'debug': "Debug tools",
             'wordlist': "Wordlist tools",
             'sniff': "Sniff tools",
+            'report': "Reports tools",
             'app': "Application tools"
         }
 
@@ -59,7 +60,7 @@ class Options(object):
                 "argl": "--method",
                 "default": "HEAD",
                 "action": "store",
-                "help": "HTTP method (use HEAD as default)",
+                "help": "Request method (use HEAD as default)",
                 "type": str
             },
             {
@@ -77,8 +78,8 @@ class Options(object):
                 "argl": "--delay",
                 "default": 0,
                 "action": "store",
-                "help": "Delay between request's threads",
-                "type": int
+                "help": "Delay between requests threading",
+                "type": float
             },
             {
                 "group": "request",
@@ -122,7 +123,7 @@ class Options(object):
                 "argl": "--tor",
                 "default": False,
                 "action": "store_true",
-                "help": "Using proxylist",
+                "help": "Using built-in proxylist",
                 "type": bool
             },
             {
@@ -131,7 +132,7 @@ class Options(object):
                 "argl": "--torlist",
                 "default": None,
                 "action": "store",
-                "help": "Path to external proxylist",
+                "help": "Path to custom proxylist",
                 "type": str
             },
             {
@@ -158,16 +159,25 @@ class Options(object):
                 "argl": "--wordlist",
                 "default": None,
                 "action": "store",
-                "help": "Path to external wordlist",
+                "help": "Path to custom wordlist",
                 "type": str
             },
             {
-                "group": "wordlist",
+                "group": "report",
                 "args": None,
                 "argl": "--reports",
                 "default": "std",
                 "action": "store",
                 "help": "Scan reports (json,std,txt)",
+                "type": str
+            },
+            {
+                "group": "report",
+                "args": None,
+                "argl": "--reports-dir",
+                "default": None,
+                "action": "store",
+                "help": "Path to custom reports dir",
                 "type": str
             },
             {
@@ -241,6 +251,15 @@ class Options(object):
                 "action": "store_true",
                 "help": "Examples of usage",
                 "type": bool
+            },
+            {
+                "group": "app",
+                "args": None,
+                "argl": "--docs",
+                "default": False,
+                "action": "store_true",
+                "help": "Read documentation",
+                "type": bool
             }
         ]
 
@@ -305,10 +324,12 @@ class Options(object):
             if not self.args.host \
                     and True is not self.args.version \
                     and True is not self.args.update \
+                    and True is not self.args.docs \
                     and True is not self.args.examples:
                 sys.exit(self.parser.print_help())
 
-            if True is self.args.version or True is self.args.update or True is self.args.examples:
+            if True is self.args.version or True is self.args.update \
+                    or True is self.args.examples or True is self.args.docs:
                 for arg, value in vars(arguments).items():
                     if arg in self.__standalone and True is value:
                         args[arg] = value

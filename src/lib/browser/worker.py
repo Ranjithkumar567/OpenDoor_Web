@@ -44,7 +44,7 @@ class Worker(threading.Thread):
         self.__empty = False
         self.__running = True
         self.__queue = queue
-        self.__timeout = int(timeout or 0)
+        self.__timeout = timeout
         self.counter = 0
 
     def pause(self):

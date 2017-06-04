@@ -18,6 +18,7 @@
 
 import collections
 import json
+import webbrowser
 from urllib.parse import urlparse
 from distutils.version import LooseVersion
 
@@ -67,6 +68,16 @@ class Helper(object):
 
         json_data = json.dumps(data, sort_keys=sort, indent=indents)
         return json_data
+
+    @staticmethod
+    def openbrowser(target):
+        """
+        Open target path in local browser
+        :param string target: url or local path
+        :return: bool
+        """
+
+        return webbrowser.open(target)
 
     @staticmethod
     def percent(counter=0, total=1):

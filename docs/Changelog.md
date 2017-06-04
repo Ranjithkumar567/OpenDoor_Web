@@ -1,6 +1,39 @@
 Changes
 =======
+v3.2.35-rc (04.06.2017)
+-------------------------
+    - Added custom reports directory --reports-dir /home/user/Reports
+    - Added user guide --docs
+    - Reusable proxy requests pooling in --tor, --torlist
+    - Prevent socks5 proxies warnings
+    - Optimizing scan execution
+    - Python 2.7 no longer support
 
+v3.1.32-rc (02.06.2017)
+-------------------------
+    - Add extensions filter --extensions php,json etc
+
+v3.0.32-rc (19.05.2017)
+-------------------------
+    - Add global installator
+
+v3.0.31-rc (20.02.2017)
+-------------------------
+    - update directories
+    - fixes for redirects
+
+v3.0.3-rc (17.02.2017)
+-------------------------
+    - fixes for https stuff scan
+    - cleared internal wordlists
+    - increased coverage
+
+v3.0.3-beta (13.02.2017)
+-------------------------
+    - detect SSL cert requires
+    - added 7150 directories
+    - fixes for https subdomians
+    - more unit coverages
 
 v3.0.2-beta (31.01.2017)
 ------------------------
@@ -15,8 +48,6 @@ v3.0.2-beta (31.01.2017)
     - added multithreading control
     - dynamic and smart requests (cookies + accept headers)
     - apache index of/ and files detection
-    - apache index of/ and files detection
-
 
 v2.7.96 Before redesign (05.01.2017)
 ------------------------------------

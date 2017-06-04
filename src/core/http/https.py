@@ -16,8 +16,9 @@
     Development Team: Stanislav WEB
 """
 
-from urllib3 import HTTPSConnectionPool, PoolManager, HTTPResponse
-from urllib3.exceptions import MaxRetryError, ReadTimeoutError, HostChangedError, SSLError, NewConnectionError
+from urllib3 import HTTPSConnectionPool, PoolManager, HTTPResponse, disable_warnings
+from urllib3.exceptions import MaxRetryError, ReadTimeoutError, HostChangedError, \
+    SSLError, NewConnectionError, InsecureRequestWarning
 from src.core import helper
 from .exceptions import HttpsRequestError
 from .providers import DebugProvider
@@ -94,6 +95,9 @@ class HttpsRequest(RequestProvider, DebugProvider):
             self.__debug.debug_request(self._headers, url, self.__cfg.method)
         
         try:
+
+            disable_warnings(InsecureRequestWarning)
+
             if self.__cfg.DEFAULT_SCAN == self.__cfg.scan:  # directories requests
                 response = self.__pool.request(self.__cfg.method,
                                                helper.parse_url(url).path,

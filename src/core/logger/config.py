@@ -28,7 +28,7 @@ def exception_log():
     """
 
     config = filesystem.readcfg('setup.cfg')
-    return config.get('system', 'exceptions_log')
+    return filesystem.getabsname(config.get('system', 'exceptions_log'))
 
 
 class Config(object):

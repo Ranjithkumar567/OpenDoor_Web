@@ -48,4 +48,3 @@ class Arguments(object):
         """
 
         return helper.is_callable(arg)
-

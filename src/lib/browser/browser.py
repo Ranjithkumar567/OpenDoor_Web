@@ -62,6 +62,9 @@ class Browser(Filter):
                 'prefix': self.__config.prefix
             })
 
+            if True is self.__config.is_external_reports_dir:
+                Reporter.external_directory = self.__config.reports_dir
+                
             if True is self.__config.is_extension_filter and self.__config.scan == self.__config.DEFAULT_SCAN:
                 self.__reader.filter_by_extension(target=self.__config.scan,
                                                   output='extensionlist',

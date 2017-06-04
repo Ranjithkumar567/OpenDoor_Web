@@ -172,9 +172,8 @@ class FileSystem(object):
             i_f = open(target)
             o_f = open(output, 'wb')
             counter = sum(1 for _ in i_f)
-            order = range(counter)
+            order = list(range(counter))
             random.shuffle(order)
-
             while order:
                 current_lines = {}
                 current_lines_count = 0
@@ -194,7 +193,7 @@ class FileSystem(object):
                     count += 1
 
                 for l in current_chunk:
-                    o_f.write(current_lines[l])
+                    o_f.write(current_lines[l].encode())
 
         except IOError as error:
             raise FileSystemError(error.strerror)

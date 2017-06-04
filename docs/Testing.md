@@ -2,9 +2,8 @@
 
 Run tests
 
-
 ```
-pip install -r requirements-dev.txt
+pip install  -r requirements-dev.txt
 coverage run --source=src/ setup.py test
 coverage report
 ```

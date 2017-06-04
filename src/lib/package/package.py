@@ -43,7 +43,7 @@ class Package(object):
         actual_version = sys.version()
         target_compare = (actual_version == versions.get('minor') or actual_version == versions.get('major'))
         relative_compare = (helper.is_less(versions.get('minor'), actual_version) is True or
-                            helper.is_more(versions.get('major'), actual_version) is True)
+                            helper.is_more(actual_version, versions.get('major')) is True)
 
         if target_compare or relative_compare:
             return True
@@ -106,6 +106,16 @@ class Package(object):
             raise PackageError(error)
 
     @staticmethod
+    def docs():
+        """
+        Open documentation
+        :raise PackageError
+        :return: bool
+        """
+        docurl = Config.params.get('documentations')
+        return helper.openbrowser(docurl)
+
+    @staticmethod
     def update():
         """
         Check for update
@@ -121,7 +131,6 @@ class Package(object):
             else:
                 msg = Config.params.get('update').format(status=tpl.line(key='upd_win_stat'))
             return msg
-
         except (AttributeError, CoreSystemError) as error:
             raise PackageError(error)
 

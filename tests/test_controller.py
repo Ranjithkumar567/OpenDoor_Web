@@ -19,7 +19,7 @@
 from __future__ import absolute_import
 import unittest2 as unittest
 import os
-from configparser import ConfigParser
+from configparser import RawConfigParser
 from ddt import ddt, data
 from src.lib.package.config import Config
 from src.core import filesystem
@@ -33,24 +33,22 @@ class TestController(unittest.TestCase):
     @property
     def __configuration(self):
         test_config =  filesystem.getabsname(os.path.join('tests', 'data', 'setup.cfg'))
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         config.read(test_config)
         return config
     
     def test_init_exception(self):
         """ Controller.init() exception test """
 
-        Config.params['required_version'] = '4.0'
+        Config.params['required_versions'] = {
+            'minor': '4.0',
+            'major': '4.5'
+        }
         with self.assertRaises(SrcError) as context:
             Controller().scan_action({})
         self.assertTrue(SrcError == context.expected)
 
-        with self.assertRaises(SrcError) as context:
-            Controller().scan_action({})
-        self.assertTrue(SrcError == context.expected)
-    
-    
-    @data( {'version': True}, {'examples': True}, {'update' : True})
+    @data( {'version': True}, {'examples': True}, {'update' : True}, {'docs' : True})
     def test_run(self, args):
         """ Controller.run() test """
         

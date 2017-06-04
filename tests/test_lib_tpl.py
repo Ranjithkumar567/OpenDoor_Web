@@ -55,7 +55,7 @@ class TestTpl(unittest.TestCase):
     def test_prompt(self):
         """ Tpl.prompt() test """
 
-        with patch('__builtin__.raw_input', return_value='fake') as _raw_input:
+        with patch('builtins.input', return_value='fake') as _raw_input:
             self.assertEqual(self.prompt_answer(), 'fake')
             _raw_input.assert_called_once_with('fake')
 
